@@ -76,7 +76,7 @@ public partial class OrderWindowPage : ContentPage
     protected override async void OnAppearing()
     {
         base.OnAppearing();
-        await WindowUtil.ResizeAsync(1650, 180, center: true, lockResize: false);
+        await WindowUtil.ResizeLandscapeResponsiveAsync();
     }
     private void OnStopLossPreset(object sender, EventArgs e)
     {
