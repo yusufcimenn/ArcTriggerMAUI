@@ -73,7 +73,11 @@ public partial class OrderWindowPage : ContentPage
         // TODO implement later
     }
 
-
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        await WindowUtil.ResizeAsync(1650, 180, center: true, lockResize: false);
+    }
     private void OnStopLossPreset(object sender, EventArgs e)
     {
         // TODO implement later   0.2-0.5-1.0 preset

@@ -11,6 +11,12 @@ namespace ArcTriggerMAUI
             InitializeComponent();
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            await WindowUtil.ResizeAsync(450, 650, center: true, lockResize: false);
+        }
+
         private void OnLoginClicked(object? sender, EventArgs e)
         {
            
