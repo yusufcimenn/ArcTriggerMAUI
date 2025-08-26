@@ -60,7 +60,7 @@
     </ContentPage.Resources>
 
     <!-- Ortalanmış yatay bar -->
-    <Grid Padding="8" HorizontalOptions="Fill" VerticalOptions="Fill">
+    <Grid BackgroundColor="#0E1116" Padding="8" HorizontalOptions="Fill" VerticalOptions="Fill">
         <Frame WidthRequest="1600"
            HeightRequest="100"
            HorizontalOptions="Center"

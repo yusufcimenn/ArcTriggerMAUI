@@ -25,23 +25,29 @@ namespace ArcTriggerMAUI
 
         private void OnLoginClicked(object? sender, EventArgs e)
         {
-            var page = new OrderWindowPage();
+            var page = new OrderWindowPage
+            {
+                BackgroundColor = Color.FromArgb("#0E1116") // sayfa zemini koyu
+            };
 
             var win = new Window(page)
             {
-                Width = 1720,  // initial size before handler
+                Width = 1720,
                 Height = 200,
                 Title = "Order"
             };
 
             Application.Current?.OpenWindow(win);
 
-            // enforce size and center after native handler is ready
+            // Enforce size, center, remove border/title, disable maximize
             _ = WindowUtil.ResizeAsync(win, 1720, 200, center: true, lockResize: false);
+            _ = WindowUtil.MakeBorderlessFixedAsync(win, allowMinimize: true); // minimize kalsın
         }
     }
-
-
-
     }
+    
+
+
+
+    
 
