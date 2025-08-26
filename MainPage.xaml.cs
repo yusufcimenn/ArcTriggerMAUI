@@ -11,19 +11,37 @@ namespace ArcTriggerMAUI
             InitializeComponent();
         }
 
-        protected override async void OnAppearing()
+        protected override  void OnAppearing()
         {
             base.OnAppearing();
-            await WindowUtil.ResizePortraitResponsiveAsync();
+
+            var count = Application.Current?.Windows?.Count ?? 0;
+            if (count <= 1)
+            {
+                // optional: main window behavior here (or nothing)
+                // await WindowUtil.ResizeLandscapeResponsiveAsync();
+            }
         }
 
         private void OnLoginClicked(object? sender, EventArgs e)
         {
-           
-             Navigation.PushAsync(new OrderWindowPage());
+            var page = new OrderWindowPage();
+
+            var win = new Window(page)
+            {
+                Width = 1720,  // initial size before handler
+                Height = 200,
+                Title = "Order"
+            };
+
+            Application.Current?.OpenWindow(win);
+
+            // enforce size and center after native handler is ready
+            _ = WindowUtil.ResizeAsync(win, 1720, 200, center: true, lockResize: false);
         }
+    }
 
 
 
     }
-}
+

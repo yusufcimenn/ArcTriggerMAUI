@@ -73,10 +73,10 @@ public partial class OrderWindowPage : ContentPage
         // TODO implement later
     }
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
-        await WindowUtil.ResizeLandscapeResponsiveAsync();
+        
     }
     private void OnStopLossPreset(object sender, EventArgs e)
     {
@@ -90,21 +90,19 @@ public partial class OrderWindowPage : ContentPage
     }
     private void OnAddOrderClicked(object sender, EventArgs e)
     {
-#if WINDOWS || MACCATALYST
-    var page = new OrderWindowPage();
+     var page = new OrderWindowPage();
 
-    var win = new Window(page)
-    {
-        Title = "Order",
-        Width = 640,   // pencere geniþliði
-        Height = 150   // pencere yüksekliði
-    };
+            var win = new Window(page)
+            {
+                Width = 1720,  // initial size before handler
+                Height = 200,
+                Title = "Order"
+            };
 
-    Application.Current?.OpenWindow(win);
-#else
-        // Mobil platformlarda çoklu OS penceresi yok; istersen modal aç
-        // await Navigation.PushModalAsync(new OrderWindowPage());
-#endif
+            Application.Current?.OpenWindow(win);
+
+            // enforce size and center after native handler is ready
+            _ = WindowUtil.ResizeAsync(win, 1720, 200, center: true, lockResize: false);
     }
     // Cancel butonunda bu pencereyi kapat
     void OnCancelClicked(object sender, EventArgs e)
