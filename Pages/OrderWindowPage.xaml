@@ -50,6 +50,24 @@
             <Setter Property="Padding" Value="2,2" />
             <Setter Property="Margin" Value="4,0" />
         </Style>
+        <!-- Actions button styles -->
+        <Style x:Key="ActionDanger" TargetType="Button">
+            <Setter Property="HeightRequest" Value="28" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="12,2" />
+            <Setter Property="BackgroundColor" Value="#EF4444" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+
+        <Style x:Key="ActionNeutral" TargetType="Button">
+            <Setter Property="HeightRequest" Value="28" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="12,2" />
+            <Setter Property="BackgroundColor" Value="#E5E7EB" />
+            <Setter Property="TextColor" Value="#111827" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
 
         <!-- colors -->
         <Color x:Key="PageBackgroundColor">#0E1116</Color>
@@ -61,23 +79,29 @@
 
     <!-- Ortalanmış yatay bar -->
     <Grid Padding="8" HorizontalOptions="Fill" VerticalOptions="Fill">
+        <!-- replace only the Frame content -->
         <Frame WidthRequest="1600"
-           HeightRequest="100"
-           HorizontalOptions="Center"
-           VerticalOptions="Center"
-           BackgroundColor="{DynamicResource SecondaryBackgroundColor}"
-           BorderColor="{DynamicResource CardBorderColor}"
-           CornerRadius="12"
-           HasShadow="False"
-           Padding="8">
+       HeightRequest="140"
+       HorizontalOptions="Center"
+       VerticalOptions="Center"
+       BackgroundColor="{DynamicResource SecondaryBackgroundColor}"
+       BorderColor="{DynamicResource CardBorderColor}"
+       CornerRadius="12"
+       HasShadow="False"
+       Padding="10">
 
-            <ScrollView Orientation="Horizontal" HeightRequest="100">
-                <HorizontalStackLayout Spacing="10" Padding="6,4" VerticalOptions="Center">
+            <!-- 2 rows: top inputs, bottom chips + actions -->
+            <Grid RowDefinitions="Auto,Auto"
+        ColumnDefinitions="*,Auto">
+
+                <!-- TOP ROW: inputs -->
+                <HorizontalStackLayout Grid.Row="0" Grid.Column="0"
+                           Spacing="10" Padding="6,2">
 
                     <!-- Stock -->
                     <VerticalStackLayout WidthRequest="140" Spacing="2">
-                        <Label Text="Stock Symbol" />
-                        <Picker x:Name="StockPicker" Title="Select a stock" SelectedIndexChanged="OnSymbolChanged">
+                        <Label Text="Stock" />
+                        <Picker x:Name="StockPicker" Title="Symbol" SelectedIndexChanged="OnSymbolChanged">
                             <Picker.Items>
                                 <x:String>AAPL</x:String>
                                 <x:String>MSFT</x:String>
@@ -90,36 +114,63 @@
                     </VerticalStackLayout>
 
                     <!-- Trigger -->
-                    <VerticalStackLayout WidthRequest="190" Spacing="2">
-                        <Label Text="Trigger Price" />
+                    <VerticalStackLayout WidthRequest="180" Spacing="2">
+                        <Label Text="Trigger Level" />
                         <Grid ColumnSpacing="4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="28" />
                                 <ColumnDefinition Width="28" />
                             </Grid.ColumnDefinitions>
-                            <Entry x:Name="TriggerEntry" Grid.Column="0" Placeholder="135.00" Keyboard="Numeric" TextChanged="OnTriggerPriceTextChanged"/>
+                            <Entry x:Name="TriggerEntry" Grid.Column="0" Placeholder="100.00" Keyboard="Numeric" TextChanged="OnTriggerPriceTextChanged"/>
                             <Button Grid.Column="1" Text="▲" Clicked="OnIncreaseTriggerClicked"/>
                             <Button Grid.Column="2" Text="▼" Clicked="OnDecreaseTriggerClicked"/>
                         </Grid>
                     </VerticalStackLayout>
 
-                    <!-- Order type -->
-                    <VerticalStackLayout WidthRequest="170" Spacing="2">
-                        <Label Text="Order Type" />
+                    <!-- Type -->
+                    <VerticalStackLayout WidthRequest="140" Spacing="2">
+                        <Label Text="Type" />
                         <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
                             <RadioButton Content="Call" IsChecked="True"
+                       TextColor="{DynamicResource PrimaryTextColor}"
+                       CheckedChanged="OnCallOptionCheckedChanged"/>
+                            <RadioButton Content="Put"
+                       TextColor="{DynamicResource PrimaryTextColor}"
+                       CheckedChanged="OnPutOptionCheckedChanged"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                    
+                    <VerticalStackLayout WidthRequest="140" Spacing="2">
+                        <Label Text="Order" />
+                        <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                            <RadioButton Content="MKT" IsChecked="True"
                            TextColor="{DynamicResource PrimaryTextColor}"
                            CheckedChanged="OnCallOptionCheckedChanged"/>
-                            <RadioButton Content="Put"
+                                                    <RadioButton Content="LMT"
                            TextColor="{DynamicResource PrimaryTextColor}"
                            CheckedChanged="OnPutOptionCheckedChanged"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
+                    <!-- Offset -->
+                    <VerticalStackLayout WidthRequest="120" Spacing="2">
+                        <Label Text="Offset" />
+                        <Entry x:Name="OffsetEntry"
+                             Placeholder=".05"
+                             Keyboard="Numeric"
+                             WidthRequest="100"
+                             HorizontalOptions="Start"
+                             HorizontalTextAlignment="End" />
+                        <HorizontalStackLayout Spacing="4">
+                            <Button Text=".05" Style="{StaticResource ChipButton}" Clicked="OnOffsetPresetClicked"/>
+                            <Button Text=".15" Style="{StaticResource ChipButton}" Clicked="OnOffsetPresetClicked"/>
+                            <Button Text=".25" Style="{StaticResource ChipButton}" Clicked="OnOffsetPresetClicked"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
 
-                    <!-- Strike & Exp -->
-                    <VerticalStackLayout WidthRequest="220" Spacing="2">
-                        <Label Text="Strike / Exp" />
+                    <!-- Strike / Expiry -->
+                    <VerticalStackLayout WidthRequest="240" Spacing="2">
+                        <Label Text="Strike / Expiry" />
                         <Grid ColumnSpacing="6">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
@@ -132,89 +183,130 @@
                                     <x:String>130</x:String>
                                     <x:String>135</x:String>
                                     <x:String>140</x:String>
-                                    <x:String>145</x:String>
                                 </Picker.Items>
                             </Picker>
-                            <Picker x:Name="ExpPicker" Grid.Column="1" Title="Exp" SelectedIndexChanged="OnExpirationChanged">
+                            <Picker x:Name="ExpPicker" Grid.Column="1" Title="dd/mm/yyyy" SelectedIndexChanged="OnExpirationChanged">
                                 <Picker.Items>
                                     <x:String>2025-09-20</x:String>
                                     <x:String>2025-10-18</x:String>
                                     <x:String>2025-11-15</x:String>
                                     <x:String>2025-12-20</x:String>
-                                    <x:String>2026-01-17</x:String>
                                 </Picker.Items>
                             </Picker>
                         </Grid>
                     </VerticalStackLayout>
 
-                    <!-- Position -->
-                    <VerticalStackLayout WidthRequest="260" Spacing="2">
-                        <Label Text="Position Size ($)" />
-                        <Entry x:Name="PositionEntry" Placeholder="500" Keyboard="Numeric" TextChanged="OnPositionTextChanged"/>
-
-                        <Grid ColumnSpacing="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Text="$2K" Style="{StaticResource ChipButton}" Clicked="OnPositionPresetClicked"/>
-                            <Button Grid.Column="1" Text="$5K" Style="{StaticResource ChipButton}" Clicked="OnPositionPresetClicked"/>
-                            <Button Grid.Column="2" Text="$10K" Style="{StaticResource ChipButton}" Clicked="OnPositionPresetClicked"/>
-                        </Grid>
-                    </VerticalStackLayout>
-
-                    <!-- Stop loss -->
-                    <VerticalStackLayout WidthRequest="260" Spacing="2">
-                        <Label Text="Stop Loss ($)" />
-                        <Entry x:Name="StopLossEntry" Placeholder="130.00" Keyboard="Numeric" TextChanged="OnStopLossTextChanged"/>
-
-                        <Grid ColumnSpacing="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" Text="$0.20" Style="{StaticResource ChipButton}" Clicked="OnStopLossPreset"/>
-                            <Button Grid.Column="1" Text="$0.50" Style="{StaticResource ChipButton}" Clicked="OnStopLossPreset"/>
-                            <Button Grid.Column="2" Text="$1.00" Style="{StaticResource ChipButton}" Clicked="OnStopLossPreset"/>
-                        </Grid>
-                    </VerticalStackLayout>
-
-                    <!-- CTA -->
-                    <Button Text="Save"
-                  BackgroundColor="{DynamicResource AccentGreen}"
-                  TextColor="Black"
-                  FontAttributes="Bold"
-                  HeightRequest="32"
-                  CornerRadius="10"
-                  Padding="14,4"
-                  VerticalOptions="Center"
-                  Clicked="OnCreateOrderClicked"/>
-
-                    <Button Text="Cancel"
-                    BackgroundColor="DarkRed"
-                    TextColor="{DynamicResource PrimaryTextColor}"
-                    BorderColor="{DynamicResource CardBorderColor}"
-                    BorderWidth="1"
-                    HeightRequest="32"
-                    CornerRadius="10"
-                    Padding="14,4"
-                    Margin="4,0,0,0"
-                    VerticalOptions="Center"
-                    Clicked="OnCancelClicked"/>
-
-                    <Button Text="+"
-                    Style="{StaticResource ChipButton}"
-                    WidthRequest="28"
-                    HeightRequest="28"
-                    Padding="0"
-                    VerticalOptions="Center"
-                    Clicked="OnAddOrderClicked"/>
+                    <!-- Optional flag -->
+                    <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="6" VerticalOptions="Center">
+                        <CheckBox x:Name="AlphaCheck" />
+                        <Label Grid.Column="1" Text="Alpha" VerticalOptions="Center"/>
+                    </Grid>
                 </HorizontalStackLayout>
-            </ScrollView>
+
+                <!-- TOP RIGHT: Place Order -->
+                <Button Grid.Row="0" Grid.Column="1"
+            Text="Place Order"
+            HeightRequest="32"
+            CornerRadius="10"
+            Padding="16,4"
+            BackgroundColor="{DynamicResource AccentGreen}"
+            TextColor="Black"
+            FontAttributes="Bold"
+            Clicked="OnCreateOrderClicked"/>
+
+                <!-- BOTTOM LEFT: tek satırda Entry + sağda chip butonlar -->
+                <Grid Grid.Row="1" Grid.Column="0"
+      ColumnDefinitions="Auto,Auto,*"
+      ColumnSpacing="6" Padding="6,4">
+
+                    <!-- Position Size -->
+                    <Grid Grid.Column="0" HorizontalOptions="Start"
+        RowDefinitions="Auto,Auto"
+        ColumnDefinitions="Auto,*">
+                        <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Position Size ($)" />
+
+                        <!-- Küçük entry solda -->
+                        <Entry x:Name="PositionEntry"
+           Grid.Row="1" Grid.Column="0"
+           WidthRequest="120"
+           HorizontalOptions="Start"
+           HorizontalTextAlignment="End"
+           Placeholder="500"
+           Keyboard="Numeric"
+           TextChanged="OnPositionTextChanged"/>
+
+                        <!-- Sağda preset butonlar -->
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Button Text="$5K"  Style="{StaticResource ChipButton}" Clicked="OnPositionPresetClicked"/>
+                            <Button Text="$10K" Style="{StaticResource ChipButton}" Clicked="OnPositionPresetClicked"/>
+                            <Button Text="$25K" Style="{StaticResource ChipButton}" Clicked="OnPositionPresetClicked"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+
+                    <!-- Stop Loss -->
+                    <Grid Grid.Column="1" HorizontalOptions="Start" Margin="8,0,0,0"
+        RowDefinitions="Auto,Auto"
+        ColumnDefinitions="Auto,*">
+                        <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Stop Loss ($)" />
+
+                        <Entry x:Name="StopLossEntry"
+           Grid.Row="1" Grid.Column="0"
+           WidthRequest="140"
+           HorizontalOptions="Start"
+           HorizontalTextAlignment="End"
+           Placeholder="130.00"
+           Keyboard="Numeric"
+           TextChanged="OnStopLossTextChanged"/>
+
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Button Text="$0.20" Style="{StaticResource ChipButton}" Clicked="OnStopLossPreset"/>
+                            <Button Text="$0.50" Style="{StaticResource ChipButton}" Clicked="OnStopLossPreset"/>
+                            <Button Text="$1.00" Style="{StaticResource ChipButton}" Clicked="OnStopLossPreset"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+
+                    <!-- Profit Taking -->
+                    <Grid Grid.Column="2"
+                          HorizontalOptions="Start"
+        RowDefinitions="Auto,Auto"
+        ColumnDefinitions="Auto,*">
+                        <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Profit Taking" />
+
+                        <Entry x:Name="ProfitEntry"
+           Grid.Row="1" Grid.Column="0"
+           WidthRequest="90"
+           Placeholder="%" Keyboard="Numeric"
+           HorizontalTextAlignment="End"/>
+
+                        <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                            <Button Text="10%" Style="{StaticResource ChipButton}" Clicked="OnProfitPresetClicked"/>
+                            <Button Text="20%" Style="{StaticResource ChipButton}" Clicked="OnProfitPresetClicked"/>
+                            <Button Text="30%" Style="{StaticResource ChipButton}" Clicked="OnProfitPresetClicked"/>
+                            <Button Text="Rem" Style="{StaticResource ChipButton}" Clicked="OnProfitPresetClicked"/>
+                            <Button Text="All" Style="{StaticResource ChipButton}" Clicked="OnProfitPresetClicked"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Grid>
+
+
+                <!-- BOTTOM RIGHT: Actions -->
+                <!-- BOTTOM RIGHT: Actions -->
+                <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6"
+                     HorizontalOptions="End" Padding="0,0,2,0">
+                    <Label Text="Actions" />
+                    <HorizontalStackLayout Spacing="6" HorizontalOptions="Start">
+                        <Button Text="Invalidate"
+            Style="{StaticResource ActionDanger}"
+             />
+                        <Button Text="Breakeven"
+            Style="{StaticResource ActionNeutral}"
+             />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+
+            </Grid>
         </Frame>
+
     </Grid>
 </ContentPage>

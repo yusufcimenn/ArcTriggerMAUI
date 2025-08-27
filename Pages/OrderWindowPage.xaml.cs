@@ -104,6 +104,23 @@ public partial class OrderWindowPage : ContentPage
     {
         Console.WriteLine("Order created!");
     }
+    private void OnProfitPresetClicked(object sender, EventArgs e)
+    {
+        //TODO IMPLEMENT LATER
+    }
+
+    private void OnTrailClicked(object sender, EventArgs e)
+    {
+        //TODO IMPLEMENT LATER
+    }
+    private void OnBreakevenClicked(object sender, EventArgs e)
+    {
+        //TODO IMPLEMENT LATER
+    }
+    private void OnOffsetPresetClicked(object sender, EventArgs e)
+    {
+        //TODO IMPLEMENT LATER
+    }
 
     private void OnAddOrderClicked(object sender, EventArgs e)
     {

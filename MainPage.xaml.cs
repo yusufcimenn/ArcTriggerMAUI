@@ -28,7 +28,7 @@ namespace ArcTriggerMAUI
             var page = new OrderWindowPage { BackgroundColor = Color.FromArgb("#0E1116") };
             var win = new Window(page)
             {
-                Width = 1720,
+                Width = 1420,
                 Height = 200,
                 Title = "Order"
             };
