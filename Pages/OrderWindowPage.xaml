@@ -11,6 +11,7 @@
         <x:Double x:Key="ControlHeight">28</x:Double>
         <x:Double x:Key="ChipHeight">26</x:Double>
 
+        <!-- Label, Entry, Picker, Button, ChipButton, Action styles -->
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
             <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
@@ -87,7 +88,7 @@
                HasShadow="False"
                Padding="10">
 
-            <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,Auto">
+            <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
 
                 <!-- TOP ROW: inputs -->
                 <ScrollView Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
@@ -127,8 +128,8 @@
                         <VerticalStackLayout Spacing="2">
                             <Label Text="Type" />
                             <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                                <RadioButton Content="Call" IsChecked="True" TextColor="{DynamicResource PrimaryTextColor}" CheckedChanged="OnCallOptionCheckedChanged"/>
-                                <RadioButton Content="Put" TextColor="{DynamicResource PrimaryTextColor}" CheckedChanged="OnPutOptionCheckedChanged"/>
+                                <RadioButton x:Name="CallRadioButton" Content="Call" IsChecked="True" TextColor="{DynamicResource PrimaryTextColor}" CheckedChanged="OnCallOptionCheckedChanged"/>
+                                <RadioButton x:Name="PutRadioButton" Content="Put" TextColor="{DynamicResource PrimaryTextColor}" CheckedChanged="OnPutOptionCheckedChanged"/>
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
 
@@ -136,8 +137,8 @@
                         <VerticalStackLayout Spacing="2">
                             <Label Text="Order" />
                             <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
-                                <RadioButton Content="MKT" IsChecked="True" TextColor="{DynamicResource PrimaryTextColor}" CheckedChanged="OnCallOptionCheckedChanged"/>
-                                <RadioButton Content="LMT" TextColor="{DynamicResource PrimaryTextColor}" CheckedChanged="OnPutOptionCheckedChanged"/>
+                                <RadioButton x:Name="MktRadioButton" Content="MKT" IsChecked="True" TextColor="{DynamicResource PrimaryTextColor}" CheckedChanged="OnCallOptionCheckedChanged"/>
+                                <RadioButton x:Name="LmtRadioButton" Content="LMT" TextColor="{DynamicResource PrimaryTextColor}" CheckedChanged="OnPutOptionCheckedChanged"/>
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
 
@@ -246,11 +247,17 @@
                 <VerticalStackLayout Grid.Row="1" Grid.Column="1" Spacing="6" HorizontalOptions="End" Padding="0,0,2,0">
                     <Label Text="Actions" />
                     <HorizontalStackLayout Spacing="6">
-                        <Button Text="Invalidate" Style="{StaticResource ActionDanger}" />
-                        <Button Text="Breakeven" Style="{StaticResource ActionNeutral}" />
+                        <Button Text="Invalidate" Style="{StaticResource ActionDanger}" Clicked="OnTrailClicked"/>
+                        <Button Text="Breakeven" Style="{StaticResource ActionNeutral}" Clicked="OnBreakevenClicked"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
 
+                <!-- Display Label for Strike/Expiry -->
+                <Label x:Name="DisplayLabel"
+                       Grid.Row="2" Grid.ColumnSpan="2"
+                       TextColor="White"
+                       FontSize="14"
+                       Margin="6,10,6,0"/>
             </Grid>
         </Frame>
     </Grid>
