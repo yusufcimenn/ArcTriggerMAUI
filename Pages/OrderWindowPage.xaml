@@ -11,7 +11,6 @@
         <x:Double x:Key="ControlHeight">28</x:Double>
         <x:Double x:Key="ChipHeight">26</x:Double>
 
-        <!-- Label, Entry, Picker, Button, ChipButton, Action styles -->
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="{DynamicResource PrimaryTextColor}" />
             <Setter Property="FontSize" Value="{StaticResource FontSmall}" />
@@ -92,7 +91,7 @@
 
                 <!-- TOP ROW: inputs -->
                 <ScrollView Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
-                    <HorizontalStackLayout Spacing="10" Padding="6,2" HorizontalOptions="Fill">
+                    <HorizontalStackLayout Spacing="10" Padding="12,2" HorizontalOptions="Fill">
 
                         <!-- Stock -->
                         <VerticalStackLayout Spacing="2">
@@ -110,7 +109,7 @@
                         </VerticalStackLayout>
 
                         <!-- Trigger -->
-                        <VerticalStackLayout Spacing="2">
+                        <VerticalStackLayout Spacing="2" Padding="12,0">
                             <Label Text="Trigger Level" />
                             <Grid ColumnSpacing="4">
                                 <Grid.ColumnDefinitions>
@@ -134,7 +133,7 @@
                         </VerticalStackLayout>
 
                         <!-- Order -->
-                        <VerticalStackLayout Spacing="2">
+                        <VerticalStackLayout Spacing="2" Padding="12,0">
                             <Label Text="Order" />
                             <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
                                 <RadioButton x:Name="MktRadioButton" Content="MKT" IsChecked="True" TextColor="{DynamicResource PrimaryTextColor}" CheckedChanged="OnCallOptionCheckedChanged"/>
@@ -143,7 +142,7 @@
                         </VerticalStackLayout>
 
                         <!-- Offset -->
-                        <VerticalStackLayout Spacing="2">
+                        <VerticalStackLayout Spacing="2" Padding="12,0">
                             <Label Text="Offset" />
                             <Entry x:Name="OffsetEntry" Placeholder=".05" Keyboard="Numeric" HorizontalTextAlignment="End"/>
                             <HorizontalStackLayout Spacing="4">
@@ -154,8 +153,8 @@
                         </VerticalStackLayout>
 
                         <!-- Strike / Expiry -->
-                        <VerticalStackLayout Spacing="2">
-                            <Label Text="Strike / Expiry" />
+                        <VerticalStackLayout Spacing="2" Padding="12,0">
+                            <Label Text="Strike" />
                             <Grid ColumnSpacing="6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -170,6 +169,15 @@
                                         <x:String>140</x:String>
                                     </Picker.Items>
                                 </Picker>
+                            </Grid>
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="Expiry" />
+                            <Grid ColumnSpacing="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
                                 <Picker x:Name="ExpPicker" Grid.Column="1" Title="dd/mm/yyyy" SelectedIndexChanged="OnExpirationChanged">
                                     <Picker.Items>
                                         <x:String>2025-09-20</x:String>
@@ -195,7 +203,7 @@
                         Text="Place Order"
                         HeightRequest="32"
                         CornerRadius="10"
-                        Padding="16,4"
+                        Padding="0,4,16,4"
                         BackgroundColor="{DynamicResource AccentGreen}"
                         TextColor="Black"
                         FontAttributes="Bold"
@@ -206,7 +214,7 @@
                     <HorizontalStackLayout Spacing="10" Padding="6,4">
 
                         <!-- Position Size -->
-                        <Grid HorizontalOptions="Start" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
+                        <Grid HorizontalOptions="Start" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" Padding="12,0">
                             <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Position Size ($)" />
                             <Entry x:Name="PositionEntry" Grid.Row="1" Grid.Column="0" WidthRequest="120" HorizontalTextAlignment="End" Placeholder="500" Keyboard="Numeric" TextChanged="OnPositionTextChanged"/>
                             <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4" VerticalOptions="Center">
@@ -217,7 +225,7 @@
                         </Grid>
 
                         <!-- Stop Loss -->
-                        <Grid HorizontalOptions="Start" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" Margin="8,0,0,0">
+                        <Grid HorizontalOptions="Start" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" Margin="8,0,0,0" Padding="12,0">
                             <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Stop Loss ($)" />
                             <Entry x:Name="StopLossEntry" Grid.Row="1" Grid.Column="0" WidthRequest="140" HorizontalTextAlignment="End" Placeholder="130.00" Keyboard="Numeric" TextChanged="OnStopLossTextChanged"/>
                             <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4" VerticalOptions="Center">
@@ -228,7 +236,7 @@
                         </Grid>
 
                         <!-- Profit Taking -->
-                        <Grid HorizontalOptions="Start" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*">
+                        <Grid HorizontalOptions="Start" RowDefinitions="Auto,Auto" ColumnDefinitions="Auto,*" Padding="12,0">
                             <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Profit Taking" />
                             <Entry x:Name="ProfitEntry" Grid.Row="1" Grid.Column="0" WidthRequest="90" Placeholder="%" Keyboard="Numeric" HorizontalTextAlignment="End"/>
                             <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4" VerticalOptions="Center">
