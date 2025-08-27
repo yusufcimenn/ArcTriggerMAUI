@@ -43,6 +43,35 @@ public partial class OrderWindowPage : ContentPage
             // Window baþlýðýna yansýt
             if (this.Window != null)
                 this.Window.Title = symbol;
+
+            // Picker Title'ýný güncelle
+            picker.Title = symbol;
+
+            // DisplayLabel güncelle
+            if (this.FindByName<Label>("DisplayLabel") is Label label)
+            {
+                var currentText = label.Text ?? "";
+                var lines = currentText.Split(',', StringSplitOptions.None)
+                                       .Select(l => l.Trim())
+                                       .ToList();
+
+                bool stockUpdated = false;
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    if (lines[i].StartsWith("Symbol:"))
+                    {
+                        lines[i] = $"Symbol: {symbol}";
+                        stockUpdated = true;
+                        break;
+                    }
+                }
+                if (!stockUpdated)
+                {
+                    lines.Insert(0, $"Symbol: {symbol}");
+                }
+
+                label.Text = string.Join(", ", lines);
+            }
         }
     }
 
